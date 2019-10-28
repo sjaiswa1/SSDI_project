@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, json
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+import requests
 
 import Seat_Geek_API as SGE
 from Database_Layer.dbController import DBController
@@ -27,6 +28,23 @@ def getUsers(userid):
 
     print('db op', response)
     return (str(response))
+
+@app.route('/SeatGeek', methods=['Get'])
+def API():
+    
+    
+    r = requests.get('https://api.seatgeek.com/2/performers?client_id=MTM2NTIyNTl8MTU3MTc4MTk1Ny4yNg&id=112')
+    
+    
+    #r_dict = json.loads(r_json)
+
+    n = r.json()
+    
+    return n
+
+
+
+
 
 
 if __name__ == '__main__':
