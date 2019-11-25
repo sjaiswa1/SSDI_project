@@ -11,6 +11,8 @@ import { useFetch, SubmitRequest } from "./Backendhooks"; //to handle fetch data
 
 
 
+
+
 const Styles = styled.div`
  .jumbo{
     // background: url(${background}) no-repeat fixed bottom;
@@ -47,84 +49,65 @@ const Styles = styled.div`
   }`;
 
 
-class User extends Component {
-    constructor() {
-      super()
-      this.state = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        errors: {}
-      }
-    }
-  
-    componentDidMount() {
-      const token = localStorage.usertoken
-      const decoded = jwt_decode(token)
-      this.setState({
-        first_name: decoded.identity.first_name,
-        last_name: decoded.identity.last_name,
-        email: decoded.identity.email
-      })
-    }
-  
-    render() {
-      return (
-        <Styles>
 
-        <div className="container">
-          <div className="jumbotron mt-1">
-            <div className="col-sm-8 mx-auto">
-              <h1 className="text-center">User Profile</h1>
-              
-            </div>
-            <table className="table col-md-6 mx-auto">
-              <tbody>
-                <tr>
-                  <td>Fist Name</td>
-                  <td>{this.state.first_name}</td>
-                </tr>
-                <tr>
-                  <td>Last Name</td>
-                  <td>{this.state.last_name}</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>{this.state.email}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        </Styles>
-      )
-    }
-  }
+  
+    
+      
+  
+  
+   
+       
 
 															
 									   
 
-const User = () => {
+  const User = () => {
+    
     const [user, offered_rides, requested_rides, hasErrors] = useFetch(); // to call flask/backend server		
+    const token = ()  =>  localStorage.usertoken;
+    const decoded = () => {jwt_decode(token)
+    this.setState({
+      first_name: decoded.identity.first_name,
+      last_name: decoded.identity.last_name,
+      email: decoded.identity.email
+    })
+  }
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-sm-4 text-right" >
-                    <img className="masthead-avatar mb-5" src={userImg} alt="profile pic" />
-                </div>   
-                <div className="user-data col-sm-4">
-                    <p className="masthead-name text-uppercase mb-2 mt-4"> {user.name +" ( "+user.username+" ) "} </p>
-                    <p className="mb-2" > {user.contact} </p>
-                    <p className="mb-2" > {user.email} </p>
-											 
+         <Styles>
+
+              <div className="container">
+                <div className="jumbotron mt-1">
+                  <div className="col-sm-8 mx-auto">
+                    <h1 className="text-center">User Profile</h1>
+                    
+                  </div>
+                  <table className="table col-md-6 mx-auto">
+                    <tbody>
+                      <tr>
+                        <td>Fist Name</td>
+                        <td>{jwt_decode(localStorage.usertoken).identity.first_name}</td>
+                        {/* <td>Neelesh Mungoli</td> */}
+                      </tr>
+                      <tr>
+                        <td>Last Name</td>
+                        {/* <td>Mungoli</td> */}
+                        <td>{jwt_decode(localStorage.usertoken).identity.last_name}</td>
+                      </tr>
+
+                      
+                      <tr>
+                        <td>Email</td>
+                        <td>{jwt_decode(localStorage.usertoken).identity.email}</td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                {/* <div className="col-sm-4 justify-content-center align-self-center">
-                    <button type="button" className="btn btn-dark btn-lg">
-                        Edit Details
-                     </button>
-                </div> */}
-            </div>
+              </div>
+
+            </Styles>
+
             <div className="row mt-5 w-75 mx-auto">
                 <div className="col-lg-6 lg-offset-6">
                     <div className="user-offered-rides">
