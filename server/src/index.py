@@ -180,13 +180,18 @@ def rides(eventId):
 
 @app.route('/users/login', methods=['POST'])
 def login():
-    cur = mysql.connection.cursor()
+    # cur = mysql.connection.cursor()
     email = request.get_json()['email']
     password = request.get_json()['password'].encode('utf-8')
-    result = ""
-	
-    cur.execute("SELECT * FROM USER where email_id = '" + str(email) + "'")
-    rv = cur.fetchone()
+    # result = ""
+
+    cursor = mysql.connection.cursor()
+    connection = mysql.connection
+    controller = DBController(cursor, connection)
+    rv = controller.Userlogin(email,password)
+
+    # cur.execute("SELECT * FROM USER where email_id = '" + str(email) + "'")
+    # rv = cur.fetchone()
 
     if rv['PASSWORD'] == (hashlib.md5(password)).hexdigest(): #hashing password and validating
         result = create_access_token(identity = {'first_name': rv['FIRST_NAME'],'last_name': rv['LAST_NAME'],'username': rv['USERNAME'],'email': rv['EMAIL_ID']})
@@ -194,6 +199,9 @@ def login():
         result = jsonify({"error":"Invalid username and password"})
     
     return result
+
+
+    
 
 
 if __name__ == "__main__":

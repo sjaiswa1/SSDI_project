@@ -176,5 +176,55 @@ class FlaskTestCase(unittest.TestCase):
         mock_get.assert_called_with('https://api.seatgeek.com/2/events?q=mets', headers={'Content-Type': 'application/json'}, params={'client_id': 'MTkwMzc2MzB8MTU3MTc4MjA1Ni41Mw'})
         self.assertEqual(response.status_code, 200)  # Testing if endpoint is hitting
 
+     # Tests the login functionality and handle exceptions
+    def test_successfullogin(self):
+         rv = self.login("user@user.com","python123")
+         assert b'You were logged in' in rv.data
+
+    def test_loginEmail(self):
+        rv = self.login("use@user.com","python123")
+        assert b'Invalid email' in rv.data
+
+    def test_loginPassword(self):
+         rv = self.login("user@user.com","python123")
+         assert b'Invalid password' in rv.data
+        
+    def test_successfullogout(self):
+
+        rv = self.logout()
+        assert b'You were logged out' in rv.data
+            
+    # # Testing login functionality with DB
+    # def test_login(self):
+    #     with app.test_db():
+    #     rv = self.app.post('/api/auth', json={
+
+        
+    #         'email': 'flask@gmail.com', 'password': 'clt@2019'
+    #     })
+    #     json_data = rv.get_json(email)
+    #     assert verify_token(email, json_data['token'])
+
+    # def test_login(self):
+    #     with app.test_client():
+    #     rv = self.app.post('/api/auth', json={
+    #         'email': 'flask@gmail.com', 'password': 'clt@2019'
+    #     })
+    #     json_data = rv.get_json(firstName)
+    #     assert verify_token(firstName, json_data['token'])
+
+    # def test_login(self):
+    #     with app.test_client():
+    #     rv = self.app.post('/api/auth', json={
+    #         'email': 'flask@gmail.com', 'password': 'clt@2019'
+    #     })
+    #     json_data = rv.get_json(lastName)
+    #     assert verify_token(lastName, json_data['token'])
+
+        
+
+        
+    
+
 if __name__ == "__main__":
     unittest.main()

@@ -41,7 +41,10 @@ class Login extends Component {
       } else{
         window.location.href = '/user'; //referencing user page link
       }
-    })
+
+    }).catch(error => {alert()})
+      alert("Internal server error!")
+    
   }
 
   render() {
