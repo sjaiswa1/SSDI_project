@@ -192,7 +192,7 @@ def login():
 
     # cur.execute("SELECT * FROM USER where email_id = '" + str(email) + "'")
     # rv = cur.fetchone()
-
+    print(rv)
     if rv['PASSWORD'] == (hashlib.md5(password)).hexdigest(): #hashing password and validating
         result = create_access_token(identity = {'first_name': rv['FIRST_NAME'],'last_name': rv['LAST_NAME'],'username': rv['USERNAME'],'email': rv['EMAIL_ID']})
     else:
